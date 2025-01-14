@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/default}">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="content container-fluid">
+                <div>사용자 페이지</div>
+                <div class="box">
+                    <div class="box-header with-bordered">
+                        <button onclick="loadTableData()">조회</button>
+                        <button onclick="showRegisterModal()">등록</button>
+                    </div>
+                    <div class="box-body">
+                        <!-- 테이블 출력 -->
+                        <div id="table"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 사용자 등록 Modal -->
+            <div id="regi-modal" style="display:none;">
+                <h2>사용자 등록</h2>
+                <form id="regi-form">
+                    <!-- 사용자 이름 -->
+                    <label for="userNm">사용자 이름:</label><br />
+                    <input type="text" id="userNm" name="userNm" required /><br /><br />
+
+                    <!-- 사용자 아이디 -->
+                    <label for="userId">사용자 아이디:</label><br />
+                    <input type="text" id="userId" name="userId" required /><br /><br />
+
+                    <!-- 사용자 비밀번호 -->
+                    <label for="password">사용자 비밀번호:</label><br />
+                    <input type="password" id="password" name="password" required /><br /><br />
+
+                    <!-- 등록자 아이디 -->
+                    <label for="regiUser">등록자 아이디:</label><br />
+                    <input type="text" id="regiUser" name="regiUser" required /><br /><br />
+
+                    <!-- 등록 및 닫기 버튼 -->
+                    <button type="button" onclick="registerUser()">등록</button>
+                    <button type="button" onclick="closeModal()">닫기</button>
+                </form>
+            </div>
+        </div>
+        <th:block layout:fragment="script">
+            <script type="text/javascript">
+                function loadTableData() {
+                    // 사용자 조회 API 호출
+                    fetch('http://localhost:8082/bi/user/table')
+                        .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok ' + response.statusText);
+                        }
+                        return response.json();})
+                        .then(data => {
+                            let tableHtml = "<table><thead><tr><th>사용자 이름</th><th>사용자 아이디</th><th>사용자 비밀번호</th><th>등록일</th>" +
+                                             "<th>등록자 아이디</th><th>수정일</th><th>수정자 아이디</th><th>사용 여부</th></tr></thead><tbody>";
+                            data.forEach(user => {
+                                tableHtml += `<tr><td>${user.user_nm}</td><td>${user.user_id}</td><td>${user.pw}</td><td>${user.regi_dt}</td>
+                                                <td>${user.regi_user}</td><td>${user.upda_dt}</td><td>${user.upda_user}</td><td>${user.use_yn}</td></tr>`;
+                            });
+                            tableHtml += "</tbody></table>";
+                            document.getElementById('table').innerHTML = tableHtml;
+                        });
+                }
+
+                function showRegisterModal() {
+                    // 모달 창 띄우기
+                    document.getElementById('regi-modal').style.display = "block";
+                }
+
+                function closeModal() {
+                    // 모달 창 닫기
+                    document.getElementById('regi-modal').style.display = "none";
+                }
+
+                function registerUser() {
+                    const user = {
+                        userNm: document.getElementById('userNm').value,
+                        userId: document.getElementById('userId').value,
+                        pw: document.getElementById('password').value,
+                        regiUser: document.getElementById('regiUser').value
+                    };
+                    fetch('http://localhost:8082/bi/user/regiUser', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(user)
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            alert("사용자 등록 완료");
+                            closeModal();
+                            loadTableData();
+                        });
+                }
+            </script>
+        </th:block>
+    </body>
+</html>

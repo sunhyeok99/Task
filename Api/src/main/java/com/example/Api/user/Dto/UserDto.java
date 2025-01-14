@@ -1,0 +1,37 @@
+package com.example.Api.user.Dto;
+
+import java.util.Date;
+
+public class UserDto {
+
+    private String userNm;
+    private String userId;
+    private String pw;
+    private String regiUser;
+
+    // 생성자
+    public UserDto(String userNm, String userId, String pw, String regiUser, String useYn) {
+        this.userNm = userNm;
+        this.userId = userId;
+        this.pw = pw;
+        this.regiUser = regiUser;
+    }
+
+    // Getter
+    public String getUserNm() {
+        return userNm;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getPw() {
+        return pw;
+    }
+
+    public String getRegiUser() {
+        return regiUser;
+    }
+
+}
