@@ -6,13 +6,14 @@ import com.example.Api.user.Entity.User;
 import com.example.Api.user.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-// 트랜잭셔널
+@Transactional(readOnly = true)
 public class UserService {
 
     @Autowired
@@ -36,6 +37,7 @@ public class UserService {
     }
 
     // 사용자 등록
+    @Transactional
     public User registerUser(UserDto userDTO) {
         // DTO를 엔티티로 변환
         User user = new User(

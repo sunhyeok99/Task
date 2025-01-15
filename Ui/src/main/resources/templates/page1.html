@@ -57,6 +57,7 @@
                         }
                         return response.json();})
                         .then(data => {
+                            // 전체 데이터 항목 테이블 형식으로 출력
                             let tableHtml = "<table><thead><tr><th>사용자 이름</th><th>사용자 아이디</th><th>사용자 비밀번호</th><th>등록일</th>" +
                                              "<th>등록자 아이디</th><th>수정일</th><th>수정자 아이디</th><th>사용 여부</th></tr></thead><tbody>";
                             data.forEach(user => {
@@ -68,16 +69,16 @@
                         });
                 }
 
+                // 모달 창 띄우기
                 function showRegisterModal() {
-                    // 모달 창 띄우기
                     document.getElementById('regi-modal').style.display = "block";
                 }
 
+                // 모달 창 닫기
                 function closeModal() {
-                    // 모달 창 닫기
                     document.getElementById('regi-modal').style.display = "none";
                 }
-
+                // 사용자가 입력한 값을 등록하는 메서드
                 function registerUser() {
                     const user = {
                         userNm: document.getElementById('userNm').value,
@@ -98,6 +99,7 @@
                             closeModal();
                             loadTableData();
                         });
+                    // 등록후에는 모달창을 닫고 데이터 새롭게 로딩
                 }
             </script>
         </th:block>

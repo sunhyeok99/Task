@@ -2,6 +2,7 @@ package com.example.Api.user.Dto;
 
 import java.util.Date;
 
+// 유저 등록할 때 사용
 public class UserDto {
 
     private String userNm;

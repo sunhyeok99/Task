@@ -5,7 +5,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 import java.util.Date;
-
+// 전체 데이터 조회할 때 사용
 public class UserListDto {
 
     private Integer id;
