@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/default}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layouts/default}">
     <head>
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -20,7 +20,7 @@
                 </div>
             </div>
 
-            <!-- 사용자 등록 Modal -->
+            <!-- 사용자 등록 Modal (페이지 로딩시 보이지 않게 설정) -->
             <div id="regi-modal" style="display:none;">
                 <h2>사용자 등록</h2>
                 <form id="regi-form">
@@ -61,8 +61,16 @@
                             let tableHtml = "<table><thead><tr><th>사용자 이름</th><th>사용자 아이디</th><th>사용자 비밀번호</th><th>등록일</th>" +
                                              "<th>등록자 아이디</th><th>수정일</th><th>수정자 아이디</th><th>사용 여부</th></tr></thead><tbody>";
                             data.forEach(user => {
-                                tableHtml += `<tr><td>${user.user_nm}</td><td>${user.user_id}</td><td>${user.pw}</td><td>${user.regi_dt}</td>
-                                                <td>${user.regi_user}</td><td>${user.upda_dt}</td><td>${user.upda_user}</td><td>${user.use_yn}</td></tr>`;
+                                tableHtml += `<tr>
+                                    <td>${user.user_nm}</td>
+                                    <td>${user.user_id}</td>
+                                    <td>${user.pw}</td>
+                                    <td>${user.regi_dt}</td>
+                                    <td>${user.regi_user}</td>
+                                    <td>${user.upda_dt}</td>
+                                    <td>${user.upda_user}</td>
+                                    <td>${user.use_yn}</td>
+                                </tr>`;
                             });
                             tableHtml += "</tbody></table>";
                             document.getElementById('table').innerHTML = tableHtml;
